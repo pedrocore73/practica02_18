@@ -1,0 +1,24 @@
+.container.auth {
+    margin-top: initial;
+    @include flex-row(center, center);
+    height: 100vh;
+    background-image: url('../assets/fondo.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .card {
+        max-width: 440px;
+
+        p {
+            text-align: center;
+            padding: 1em;
+
+            b {
+                color: $main-color;
+                cursor: pointer;
+            }
+        }
+    }
+
+}

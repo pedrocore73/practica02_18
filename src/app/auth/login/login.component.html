@@ -1,0 +1,30 @@
+<div class="container auth">
+    <div class="card">
+        <div class="fila">
+            <div class="col-100 titulo">
+                <h1>Iniciar sesión</h1>
+            </div>
+        </div>
+        <hr>
+        <form [formGroup]="loginForm">
+            <div class="fila">
+                <div class="col-100 pila">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email "type="text" formControlName="email">
+                </div>
+            </div>
+            <div class="fila">
+                <div class="col-100 pila">
+                    <label for="password">Contraseña</label>
+                    <input id="password" type="password" formControlName="password">
+                </div>
+            </div>
+            <div class="fila">
+                <div class="col-100 botones">
+                    <button type="submit">Iniciar</button>
+                </div>
+            </div>
+        </form>
+        <p>Si no dispone de cuenta pulse <b routerLink="/signin">aquí</b></p>
+    </div>
+</div>

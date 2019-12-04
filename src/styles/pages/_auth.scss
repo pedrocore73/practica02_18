@@ -19,6 +19,12 @@
                 cursor: pointer;
             }
         }
+
+        p.danger {
+            border: 1px solid $danger;
+            color: $danger;
+            border-radius: 0.5em;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -9,16 +10,48 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class SigninComponent implements OnInit {
 
   signinForm: FormGroup;
+  mensaje: string;
+  showMensaje = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.signinForm = new FormGroup({
-      nombre: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
+      nombre: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
+      password: new FormControl('', [Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,64}$')]),
       checkpass: new FormControl(''),
     })
+  }
+
+  sendUsuario() {
+    let usuario = {
+      nombre: this.signinForm.get('nombre').value,
+      email: this.signinForm.get('email').value,
+      password: this.signinForm.get('password').value
+    }
+    this.authService.postUsuario(usuario)
+                .subscribe((res:any)=>{
+                    console.log(res);
+                  },(err:any)=>{
+                    console.log(err);
+                  })
+  }
+
+  checkValidation() {
+    this.showMensaje = true;
+    if (this.signinForm.controls.nombre.invalid){
+      this.mensaje = 'Introduzca un nombre y apellidos';
+    } else if (this.signinForm.controls.email.invalid) {
+      this.mensaje = 'Introduzca un correo electrónico válido';
+    } else if (this.signinForm.controls.password.invalid) {
+      this.mensaje = 'La contraseña debe tener más de 4 caracteres y al menos una mayúscula, una minúscula y un número';
+    } else if(this.signinForm.get('password').value !== this.signinForm.get('checkpass').value) {
+      this.mensaje = 'Las contraseñas no coinciden';
+    } else {
+      this.mensaje = '';
+      this.showMensaje = false;
+    }
   }
 
 }

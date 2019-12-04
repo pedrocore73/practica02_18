@@ -6,7 +6,7 @@
             </div>
         </div>
         <hr>
-        <form [formGroup]="signinForm">
+        <form [formGroup]="signinForm" (ngSubmit)="sendUsuario()">
             <div class="fila">
                 <div class="col-100 pila">
                     <label for="nombre">Nombre y apellidos</label>
@@ -33,10 +33,16 @@
             </div>
             <div class="fila">
                 <div class="col-100 botones">
-                    <button type="submit">Enviar</button>
+                    <!-- Pendiente crear custom validator -->
+                    <button *ngIf="signinForm.invalid || (signinForm.get('password').value !== signinForm.get('checkpass').value)" type="button"
+                            (click)="checkValidation()">
+                        Enviar
+                    </button>
+                    <button *ngIf="signinForm.valid" type="submit">Enviar</button>
                 </div>
             </div>
         </form>
         <p>Si ya dispone de cuenta pulse <b routerLink="/">aquí</b></p>
+        <p class="danger" *ngIf="showMensaje">{{mensaje}}</p>
     </div>
 </div>

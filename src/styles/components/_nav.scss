@@ -20,6 +20,100 @@ nav {
 
         }
 
+        .user {
+            @include flex-row(flex-start, center);
+            margin-right: 0;
+            padding: 10px;
+            position: relative;
+
+            span {
+                position: relative;
+
+                .perfil {
+                    width: 60px;
+                    max-width: 60px;
+                    height: 60px;
+                    max-height: 60px;
+                    border: 3px solid white;
+                    border-radius: 40px;
+                    background-image: url('../assets/user-white.svg');
+                    background-repeat: none;
+                    background-position: center;
+                    background-size: cover;
+                }
+            }
+
+            &:hover {
+                background-color: rgba(255,255,255,.15);
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            
+            .dropdown {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                min-width: 300px;
+                z-index: 1000;
+                padding: 40px 0;
+
+                .menu-user {
+                    width: 100%;
+                    position: absolute;
+                    padding: 20px;
+                    box-shadow: 0 0 13px 0 rgba(82,63,105,0.05);
+                    background-color: #1e1e2d;
+                    color: #67666e;
+
+                    .item {
+                        color: #a3a3b7;
+                        padding: 20px 0;
+                        cursor: pointer;
+                        position: relative;
+
+                        &:hover {
+                            color: white;
+                        }
+                    }
+
+                    hr {
+                        border: none;
+                        height: 1px;
+                        background-color: #a2a3b7d0;
+                        margin: 0;
+                    }
+
+                    &:before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        bottom: 100%;
+                        width: 0;
+                        height: 0;
+                    }
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        bottom: 100%;
+                        width: 0;
+                        height: 0;
+                        right: 30px;
+                        border: 15px solid transparent;
+                        border-bottom-color: #1e1e2d;
+                    }
+                }
+   
+            }
+
+            &:hover .dropdown {
+                display: inline;
+            }
+
+        }
+
     }
 
     .side-menu {

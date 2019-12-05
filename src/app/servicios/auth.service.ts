@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 export class AuthService {
 
   urlUsuario = environment.urlUsuario;
+  urlLogin = environment.urlLogin;
+  token: any;
 
   constructor(private http: HttpClient) { }
 
@@ -20,5 +22,17 @@ export class AuthService {
                         })
                       )
   }
+
+  login(credenciales) {
+    return this.http.post(this.urlLogin, credenciales)
+                      .pipe(
+                        map((res:any)=>{
+                          this.token = res.token;
+                          return res;
+                        })
+                      )
+  }
+
+
 
 }

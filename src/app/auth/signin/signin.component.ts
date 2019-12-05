@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { ValidatePass } from '../../validators/checkpass.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -15,7 +16,8 @@ export class SigninComponent implements OnInit {
   showMensaje = false;
 
   constructor(private authService: AuthService,
-              private ff: FormBuilder) { }
+              private ff: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
     this.signinForm = this.ff.group({
@@ -35,7 +37,7 @@ export class SigninComponent implements OnInit {
     }
     this.authService.postUsuario(usuario)
                 .subscribe((res:any)=>{
-                    console.log(res);
+                    this.router.navigate(['/']);
                   },(err:any)=>{
                     console.log(err);
                   })

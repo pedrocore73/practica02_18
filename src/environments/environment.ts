@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlUsuario: 'http://localhost:8080/usuario'
+  urlUsuario: 'http://localhost:8080/usuario',
+  urlLogin: 'http://localhost:8080/login',
 };
 
 /*

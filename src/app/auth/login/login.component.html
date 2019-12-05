@@ -6,7 +6,7 @@
             </div>
         </div>
         <hr>
-        <form [formGroup]="loginForm">
+        <form [formGroup]="loginForm" (ngSubmit)="sendCredenciales()">
             <div class="fila">
                 <div class="col-100 pila">
                     <label for="email">Correo electrónico</label>

@@ -43,7 +43,7 @@ export class SigninComponent implements OnInit {
 
   checkValidation() {
     this.showMensaje = true;
-    if (this.signinForm.controls.nombre.invalid){
+    if (this.signinForm.controls.nombre.invalid) {
       this.mensaje = 'Introduzca un nombre y apellidos';
     } else if (this.signinForm.controls.email.invalid) {
       this.mensaje = 'Introduzca un correo electrónico válido';

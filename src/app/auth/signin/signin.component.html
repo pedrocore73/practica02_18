@@ -33,8 +33,7 @@
             </div>
             <div class="fila">
                 <div class="col-100 botones">
-                    <!-- Pendiente crear custom validator -->
-                    <button *ngIf="signinForm.invalid || (signinForm.get('password').value !== signinForm.get('checkpass').value)" type="button"
+                    <button *ngIf="signinForm.invalid" type="button"
                             (click)="checkValidation()">
                         Enviar
                     </button>

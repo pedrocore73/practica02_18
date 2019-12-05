@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { ValidatePass } from '../../validators/checkpass.validator';
 
 @Component({
   selector: 'app-signin',
@@ -13,18 +14,20 @@ export class SigninComponent implements OnInit {
   mensaje: string;
   showMensaje = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private ff: FormBuilder) { }
 
   ngOnInit() {
-    this.signinForm = new FormGroup({
-      nombre: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
-      password: new FormControl('', [Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,64}$')]),
-      checkpass: new FormControl(''),
-    })
+    this.signinForm = this.ff.group({
+      nombre: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,64}$')]],
+      checkpass: ['', [Validators.required]]
+    }, {validator: ValidatePass})
   }
 
   sendUsuario() {
+    this.showMensaje = false;
     let usuario = {
       nombre: this.signinForm.get('nombre').value,
       email: this.signinForm.get('email').value,
@@ -46,12 +49,11 @@ export class SigninComponent implements OnInit {
       this.mensaje = 'Introduzca un correo electrónico válido';
     } else if (this.signinForm.controls.password.invalid) {
       this.mensaje = 'La contraseña debe tener más de 4 caracteres y al menos una mayúscula, una minúscula y un número';
-    } else if(this.signinForm.get('password').value !== this.signinForm.get('checkpass').value) {
+    } else if (this.signinForm.controls.checkpass.invalid) { 
+      this.mensaje = 'Reescriba la contraseña por favor'
+    } else if(this.signinForm.invalid) {
       this.mensaje = 'Las contraseñas no coinciden';
-    } else {
-      this.mensaje = '';
-      this.showMensaje = false;
-    }
+    } 
   }
 
 }

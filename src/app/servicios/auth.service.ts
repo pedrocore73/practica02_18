@@ -14,6 +14,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  getUsuario() {
+    return this.http.get(this.urlUsuario + '?token=' + this.token)
+                      .pipe(
+                        map((res:any)=>{
+                          return res;
+                        })
+                      )
+  }
+
   postUsuario(usuario) {
     return this.http.post(this.urlUsuario, usuario)
                       .pipe(

@@ -1,0 +1,26 @@
+.cuenta {
+    @include flex-row(flex-start, stretch);
+    width: 100%;
+
+    .datos {
+        width: 50%;
+    }
+
+    .imagen {
+        width: 50%;
+        @include flex-column(center, center);
+
+        .avatar {
+            width: 250px;
+            max-width: 250px;
+            height: 250px;
+            max-height: 250px;
+            border: 10px solid $main-color;
+            border-radius: 400px;
+            background-repeat: none;
+            background-position: center;
+            background-size: cover;
+        }
+    }
+
+}

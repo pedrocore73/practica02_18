@@ -1,1 +1,53 @@
-<p>cuenta works!</p>
+<app-nav></app-nav>
+<div class="container">
+    <div class="card">
+        <div class="fila">
+            <div class="col-100 titulo">
+                <h1>Cuenta</h1>
+            </div>
+        </div>
+        <form [formGroup]="cuentaForm" >
+            <div class="cuenta">
+                <div class="datos">
+                    <div class="fila">
+                        <div class="col-100 pila">
+                            <label for="nombre">Nombre y apellidos</label>
+                            <input type="text" id="nombre" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <div class="col-100 pila">
+                            <label for="email">Correo electrónico</label>
+                            <input type="text" id="email" formControlName="email" readonly>
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <div class="col-100 pila">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" id="direccion" formControlName="direccion">
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <div class="col-33 pila">
+                            <label for="cp">Código postal</label>
+                            <input type="text" id="cp" formControlName="cp">
+                        </div>
+                        <div class="col-66 pila">
+                            <label for="localidad">Localidad</label>
+                            <input type="text" id="localidad" formControlName="localidad">
+                        </div>
+                    </div>
+                </div>
+                <div class="imagen">
+                    <div class="avatar"  *ngIf="imagen !== undefined" [ngStyle]="{'background-image':'url(' + imagen + ')'}"></div>
+                </div>
+            </div>
+            <div class="fila">
+                <div class="col-100 botones">
+                    <button class="outline">Cancelar</button>
+                    <button class="m-l-small">Guardar cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

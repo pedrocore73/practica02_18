@@ -12,6 +12,8 @@ export class CuentaComponent implements OnInit {
 
   cuentaForm: FormGroup;
   imagen: any;
+  imagenSrc: any;
+  id: string;
   public uploader: FileUploader = new FileUploader({url: 'http://localhost:8080/imagenes'});
 
   constructor(private authService: AuthService,
@@ -34,12 +36,14 @@ export class CuentaComponent implements OnInit {
   loadUsuario() {
     this.authService.getUsuario()
             .subscribe((res:any)=>{
+                this.id = res.usuario._id;
                 this.cuentaForm.get('nombre').setValue(res.usuario.nombre);
                 this.cuentaForm.get('email').setValue(res.usuario.email);
                 this.cuentaForm.get('direccion').setValue(res.usuario.direccion);
                 this.cuentaForm.get('cp').setValue(res.usuario.cp);
                 this.cuentaForm.get('localidad').setValue(res.usuario.localidad);
-                this.imagen = 'http://localhost:8080/imagenes/' + res.usuario.imagen;
+                this.imagen = res.usuario.imagen;
+                this.imagenSrc = 'http://localhost:8080/imagenes/' + res.usuario.imagen;
               },(err:any)=>{
                 console.log(err);
               })
@@ -47,10 +51,10 @@ export class CuentaComponent implements OnInit {
 
   onFileSelected(event) {
     if(event.target.files.length > 0) {
-      this.imagen = 'foto.' + event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length -1];
+      this.imagen = this.id + new Date().getTime() + '.' + event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length -1];
       let file = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = ()=>{ this.imagen = reader.result };
+      reader.onload = ()=>{ this.imagenSrc = reader.result };
       reader.readAsDataURL(file);
     }
   }
@@ -65,7 +69,7 @@ export class CuentaComponent implements OnInit {
     }
     this.authService.putUsuario(user)
                 .subscribe((res:any)=>{
-                    console.log(res);
+                    this.authService.setImagen(this.imagen);
                   },(err:any)=>{
                     console.log(err);
                   })

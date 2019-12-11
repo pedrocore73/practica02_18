@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="imagen">
-                    <div class="avatar"  *ngIf="imagen !== undefined" [ngStyle]="{'background-image':'url(' + imagen + ')'}"></div>
+                    <div class="avatar"  *ngIf="imagen !== undefined" [ngStyle]="{'background-image':'url(' + imagenSrc + ')'}"></div>
                     <label for="pic">Cambiar imagen</label>
                     <input id="pic" type="file" ng2FileSelect [uploader]="uploader" (change)="onFileSelected($event)">
                 </div>

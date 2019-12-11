@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   putUsuario(usuario) {
-    return this.http.put(this.urlUsuario + '/' + this.id, usuario)
+    return this.http.put(this.urlUsuario + '?token=' + this.token, usuario)
                       .pipe(
                         map((res:any)=>{
                           return res;

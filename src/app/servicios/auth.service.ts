@@ -13,6 +13,7 @@ export class AuthService {
   urlLogin = environment.urlLogin;
   token: any;
   private imagenIn = new BehaviorSubject<any>({imagen: ''});
+  id: string;
 
   get isImagenIn() {
     return this.imagenIn.asObservable();
@@ -42,11 +43,21 @@ export class AuthService {
                       )
   }
 
+  putUsuario(usuario) {
+    return this.http.put(this.urlUsuario + '/' + this.id, usuario)
+                      .pipe(
+                        map((res:any)=>{
+                          return res;
+                        })
+                      )
+  }
+
   login(credenciales) {
     return this.http.post(this.urlLogin, credenciales)
                       .pipe(
                         map((res:any)=>{
                           this.setImagen(res.imagen);
+                          this.id = res.id;
                           this.token = res.token;
                           return res;
                         })

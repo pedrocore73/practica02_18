@@ -6,7 +6,7 @@
                 <h1>Cuenta</h1>
             </div>
         </div>
-        <form [formGroup]="cuentaForm" >
+        <form [formGroup]="cuentaForm" (ngSubmit)="sendUser()">
             <div class="cuenta">
                 <div class="datos">
                     <div class="fila">
@@ -40,12 +40,14 @@
                 </div>
                 <div class="imagen">
                     <div class="avatar"  *ngIf="imagen !== undefined" [ngStyle]="{'background-image':'url(' + imagen + ')'}"></div>
+                    <label for="pic">Cambiar imagen</label>
+                    <input id="pic" type="file" ng2FileSelect [uploader]="uploader" (change)="onFileSelected($event)">
                 </div>
             </div>
             <div class="fila">
                 <div class="col-100 botones">
-                    <button class="outline">Cancelar</button>
-                    <button class="m-l-small">Guardar cambios</button>
+                    <button class="outline" type="button" routerLink="/inicio">Cancelar</button>
+                    <button class="m-l-small" type="submit" (click)="uploader.uploadAll()">Guardar cambios</button>
                 </div>
             </div>
         </form>

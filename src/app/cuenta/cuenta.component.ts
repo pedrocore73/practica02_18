@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/auth.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-cuenta',
@@ -10,7 +11,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class CuentaComponent implements OnInit {
 
   cuentaForm: FormGroup;
-  imagen: string;
+  imagen: any;
+  public uploader: FileUploader = new FileUploader({url: 'http://localhost:8080/imagenes'});
 
   constructor(private authService: AuthService,
               private ff: FormBuilder) { }
@@ -24,6 +26,9 @@ export class CuentaComponent implements OnInit {
       cp: '',
       localidad: ''
     });
+    this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+      form.append('imagen', this.imagen);
+    }
   }
 
   loadUsuario() {
@@ -38,6 +43,32 @@ export class CuentaComponent implements OnInit {
               },(err:any)=>{
                 console.log(err);
               })
+  }
+
+  onFileSelected(event) {
+    if(event.target.files.length > 0) {
+      this.imagen = 'foto.' + event.target.files[0].name.split('.')[event.target.files[0].name.split('.').length -1];
+      let file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = ()=>{ this.imagen = reader.result };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  sendUser() {
+    let user = {
+      nombre: this.cuentaForm.get('nombre').value,
+      direccion: this.cuentaForm.get('direccion').value,
+      cp: this.cuentaForm.get('cp').value,
+      localidad: this.cuentaForm.get('localidad').value,
+      imagen: this.imagen,
+    }
+    this.authService.putUsuario(user)
+                .subscribe((res:any)=>{
+                    console.log(res);
+                  },(err:any)=>{
+                    console.log(err);
+                  })
   }
 
 }
